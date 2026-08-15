@@ -1,0 +1,9 @@
+# DSH Enter Customizer bundle patch: inserts the plugin row over the empty
+# profile root (same one-insert pattern as the dsh-base bundle). The Host half
+# (lib/index.js) registers the durable "dsh-enter-customizer" settings
+# namespace; the client half (exports["./client"]) is discovered through the
+# package.json dsh.client declaration.
+
+- insert:
+    - id: dsh-enter-customizer
+      name: dsh-enter-customizer

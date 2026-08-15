@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="340" viewBox="0 0 720 340" font-family="'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#11141b"/>
+      <stop offset="1" stop-color="#0d0f14"/>
+    </linearGradient>
+  </defs>
+  <rect width="720" height="340" fill="url(#bg)"/>
+
+  <!-- chat area hint -->
+  <text x="72" y="52" fill="#5d6678" font-size="12">对话区域</text>
+  <line x1="72" y1="66" x2="648" y2="66" stroke="#232a38" stroke-width="1" stroke-dasharray="4 4"/>
+
+  <!-- error toast above the composer -->
+  <g>
+    <rect x="216" y="104" width="288" height="36" rx="9" fill="#1d222c" stroke="#3a4356" stroke-width="1"/>
+    <rect x="216" y="104" width="4" height="36" rx="2" fill="#f2555a"/>
+    <text x="234" y="127" fill="#f2555a" font-size="13">发送失败：session-removed</text>
+  </g>
+
+  <!-- composer card -->
+  <rect x="72" y="180" width="576" height="120" rx="14" fill="#171b23" stroke="#2a3140" stroke-width="1"/>
+
+  <!-- input area -->
+  <rect x="92" y="200" width="420" height="40" rx="8" fill="#12151c" stroke="#242b39" stroke-width="1"/>
+  <text x="108" y="225" fill="#5d6678" font-size="13">输入消息，/ 使用命令…</text>
+
+  <!-- tool row -->
+  <g>
+    <circle cx="112" cy="282" r="7" fill="#262d3b"/>
+    <circle cx="132" cy="282" r="7" fill="#262d3b"/>
+    <circle cx="152" cy="282" r="7" fill="#262d3b"/>
+    <text x="180" y="286" fill="#5d6678" font-size="11">+</text>
+  </g>
+
+  <!-- send button -->
+  <rect x="582" y="250" width="44" height="34" rx="8" fill="#2563eb"/>
+  <path d="M600 260 L600 274 M594 267 L600 274 L606 267" stroke="#fff" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <!-- annotation -->
+  <g font-size="12" fill="#8b95a7">
+    <text x="216" y="336" text-anchor="middle">发送失败提示浮动在输入栏正上方，3.2 秒后自动消失</text>
+  </g>
+</svg>
