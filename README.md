@@ -52,8 +52,8 @@ dsh plugin --profile web remove dsh-enter-customizer   # 卸载
 ├── cordis.patch.yml     # bundle patch：插入插件行
 ├── pnpm-lock.yaml       # 插件依赖快照（link 安装时 Node 从项目目录解析）
 ├── lib/
-│   ├── index.js         # Host 半部：注册持久化 settings 命名空间
-│   └── client.js        # Client 半部：快捷键拦截 + 设置页 + 失败提示
+│   ├── index.js         # Host 半部：注册持久化 settings 命名空间 + webServer 配置路由
+│   └── client.js        # Client 半部：快捷键拦截 + 设置页 + 失败提示 + fetch 持久化
 └── assets/
     └── settings.png     # 设置界面截图
 ```
@@ -63,5 +63,5 @@ dsh plugin --profile web remove dsh-enter-customizer   # 卸载
 - 快捷键拦截：在 `conversation.input.dock` 挂载组件，使用 document 级 capture 监听 `keydown` / `click`，仅当事件目标位于 `[data-composer-card]` 内时按配置处理；`preventDefault` + `stopPropagation` 覆盖系统默认行为
 - 发送/繁忙时插入均通过 `session.prompt(content, 'queue')` 提交——与系统内置队列完全同一通道，消息显示在系统队列栏
 - 换行通过 DOM 写入 + `inputActions.setDraft()` 立即同步，文本区即时刷新
-- 持久化：Host 半部 `settings.register` 注册 `dsh-enter-customizer` 命名空间（schemastery schema），Client 半部经 `settingsScope.bind` 读写（`scope.set` 逐字段写入，`scope.subscribe` 同步外部变更）
+- 持久化：Host 半部 `settings.register` 注册 `dsh-enter-customizer` 命名空间（schemastery schema），并通过 `webServer.register` 挂载 `/dsh-enter-customizer` 路由（GET 读 / POST 写，POST 带同源检查）；Client 半部经 `fetch` 读写该路由（`settingsScope` 仅作 UI 同步兜底）。之所以不用 `settingsScope` 直连，是因为 DSH 的 api-gateway 对 settings RPC 有硬编码命名空间白名单，第三方命名空间默认不可见也不可写
 - Client bundle 为纯 JS（仅依赖 `react`），无需打包步骤，直接以 `__ModuleLoader__` 工厂格式发布
