@@ -34,45 +34,9 @@ DSH（DeepSeek Harness）Web 插件：接管聊天输入框的系统输入快捷
 
 ## 安装
 
-本插件是标准 DSH Web 插件（npm 包），通过 `dsh plugin` 命令安装到 web profile：
-
 ```bash
-# 方式一（推荐）：直接从 GitHub 安装
 dsh plugin --profile web add github:Boliban/dsh-enter-customizer
-
-# 方式二：本地目录安装（开发/自用时推荐）
-# 注意：Windows 下项目路径不能包含空格（dsh 的 pnpm 参数转发限制）。
-# 含空格时请先建一个无空格的 junction 再从该路径安装：
-#   New-Item -ItemType Junction -Path C:\dsh-enter-customizer -Target "E:\你的项目目录"
-#   dsh plugin --profile web add C:\dsh-enter-customizer
-git clone https://github.com/Boliban/dsh-enter-customizer.git
-cd dsh-enter-customizer
-pnpm install
-dsh plugin --profile web add .
-
-# 方式三：发布到 npm 后按包名安装
-dsh plugin --profile web add dsh-enter-customizer
 ```
-
-安装完成后**重启 dsh** 使插件生效（`dsh.client` 包扫描在启动时进行）。
-
-> 安装时会自动完成两件事：
-> 1. 把包加入 profile 依赖与 `dsh.profile.bundles` 层（通过 `dsh.bundle` 声明）
-> 2. bundle patch 把插件行插入 profile 配置，Host 半部注册持久化设置命名空间，Client 半部经 `dsh.client` 声明被 Web 加载
-
-### 依赖说明
-
-- `dsh plugin add` 以 `link:` 方式安装时，Node 从**插件项目目录**解析 Host 半部（`lib/index.js`）的 `import`——因此项目必须先生成自己的 `node_modules`：
-  ```bash
-  pnpm install
-  ```
-  （`node_modules` 已在 `.gitignore` 中，不提交；项目自带 `pnpm-lock.yaml` 记录依赖快照）
-- `deepseek-ai/*`、`react`、`cordis` 均按官方模式声明为 **peerDependencies**（devDependencies 同版本用于本地解析）：web profile 的 `autoInstallPeers: false` 下，这些依赖由 profile 中已有的包提供，不会为插件重复安装副本，避免出现重复运行时
-
-### 验证
-
-- 打开设置面板，左侧导航出现「**输入快捷键**」页面
-- `~/.dsh/settings.yaml` 中出现 `dsh-enter-customizer:` 段（改动后自动写入）
 
 ### 卸载与更新
 
@@ -80,12 +44,6 @@ dsh plugin --profile web add dsh-enter-customizer
 dsh plugin --profile web update dsh-enter-customizer   # 更新到最新
 dsh plugin --profile web remove dsh-enter-customizer   # 卸载
 ```
-
-### 常见问题
-
-- **安装报 "not in the npm registry"**：多半是路径含空格被参数拆分，改用 GitHub 方式安装或 junction 路径
-- **github.com 连接超时**（网络受限）：可改用 SSH 443 通道 —— `dsh plugin --profile web add git+ssh://git@ssh.github.com:443/Boliban/dsh-enter-customizer.git`；git push 同理 `git push ssh://git@ssh.github.com:443/Boliban/dsh-enter-customizer.git main`
-- **GitHub 方式安装后依赖解析异常**：GitHub 安装为真实安装（依赖由 pnpm 管理、peer 由 profile 提供）；若异常可回退到本地目录安装（方式二）排查
 
 ## 文件结构
 
@@ -95,10 +53,9 @@ dsh plugin --profile web remove dsh-enter-customizer   # 卸载
 ├── pnpm-lock.yaml       # 插件依赖快照（link 安装时 Node 从项目目录解析）
 ├── lib/
 │   ├── index.js         # Host 半部：注册持久化 settings 命名空间
-│   └── client.js        # Client 半部：快捷键拦截 + 设置页 + 失败提示（__ModuleLoader__ bundle）
+│   └── client.js        # Client 半部：快捷键拦截 + 设置页 + 失败提示
 └── assets/
-    ├── settings.png     # 设置界面截图
-    └── toast.svg        # 失败提示示意图
+    └── settings.png     # 设置界面截图
 ```
 
 ## 实现要点
