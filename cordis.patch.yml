@@ -3,7 +3,8 @@
 # (lib/index.js) registers the durable "dsh-enter-customizer" settings
 # namespace; the client half (exports["./client"]) is discovered through the
 # package.json dsh.client declaration.
-
 - insert:
-    - id: dsh-enter-customizer
+    - id: enter-customizer
       name: dsh-enter-customizer
+
+

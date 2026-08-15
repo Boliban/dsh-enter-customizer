@@ -54,6 +54,15 @@ dsh plugin --profile web add dsh-enter-customizer
 > 1. 把包加入 profile 依赖与 `dsh.profile.bundles` 层（通过 `dsh.bundle` 声明）
 > 2. bundle patch 把插件行插入 profile 配置，Host 半部注册持久化设置命名空间，Client 半部经 `dsh.client` 声明被 Web 加载
 
+### 依赖说明
+
+- `dsh plugin add` 以 `link:` 方式安装时，Node 从**插件项目目录**解析 Host 半部（`lib/index.js`）的 `import`——因此项目必须先生成自己的 `node_modules`：
+  ```bash
+  pnpm install
+  ```
+  （`node_modules` 已在 `.gitignore` 中，不提交；项目自带 `pnpm-lock.yaml` 记录依赖快照）
+- `deepseek-ai/*`、`react`、`cordis` 均按官方模式声明为 **peerDependencies**（devDependencies 同版本用于本地解析）：web profile 的 `autoInstallPeers: false` 下，这些依赖由 profile 中已有的包提供，不会为插件重复安装副本，避免出现重复运行时
+
 ### 验证
 
 - 打开设置面板，左侧导航出现「**输入快捷键**」页面
@@ -68,8 +77,9 @@ dsh plugin --profile web remove dsh-enter-customizer
 ## 文件结构
 
 ```
-├── package.json         # dsh.client（Web 插件）+ dsh.bundle（profile patch）声明
+├── package.json         # dsh.client（Web 插件）+ dsh.bundle（profile patch）声明；deepseek-ai/* 为 peerDependencies
 ├── cordis.patch.yml     # bundle patch：插入插件行
+├── pnpm-lock.yaml       # 插件依赖快照（link 安装时 Node 从项目目录解析）
 ├── lib/
 │   ├── index.js         # Host 半部：注册持久化 settings 命名空间
 │   └── client.js        # Client 半部：快捷键拦截 + 设置页 + 失败提示（__ModuleLoader__ bundle）
