@@ -1,7 +1,7 @@
 {
   "name": "dsh-enter-customizer",
-  "description": "DSH web plugin: customize the chat composer input shortcuts (Enter / Ctrl+Enter / Shift+Enter / Alt+Enter / send button) with send / queue-while-busy / newline / no-op behaviors, backed by durable user settings.",
-  "version": "0.1.0",
+  "description": "DSH web plugin: customize the chat composer input shortcuts (Enter / Ctrl+Enter / Shift+Enter / Alt+Enter / send button). Configuration persists through a plugin-owned webServer route.",
+  "version": "0.2.0",
   "license": "MIT",
   "type": "module",
   "main": "lib/index.js",
