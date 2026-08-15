@@ -37,14 +37,20 @@ DSH（DeepSeek Harness）Web 插件：接管聊天输入框的系统输入快捷
 本插件是标准 DSH Web 插件（npm 包），通过 `dsh plugin` 命令安装到 web profile：
 
 ```bash
-# 方式一：本地目录安装（开发/自用时推荐）
+# 方式一（推荐）：直接从 GitHub 安装
+dsh plugin --profile web add github:Boliban/dsh-enter-customizer
+
+# 方式二：本地目录安装（开发/自用时推荐）
 # 注意：Windows 下项目路径不能包含空格（dsh 的 pnpm 参数转发限制）。
 # 含空格时请先建一个无空格的 junction 再从该路径安装：
 #   New-Item -ItemType Junction -Path C:\dsh-enter-customizer -Target "E:\你的项目目录"
 #   dsh plugin --profile web add C:\dsh-enter-customizer
+git clone https://github.com/Boliban/dsh-enter-customizer.git
+cd dsh-enter-customizer
+pnpm install
 dsh plugin --profile web add .
 
-# 方式二：发布到 npm 后按包名安装
+# 方式三：发布到 npm 后按包名安装
 dsh plugin --profile web add dsh-enter-customizer
 ```
 
@@ -68,11 +74,18 @@ dsh plugin --profile web add dsh-enter-customizer
 - 打开设置面板，左侧导航出现「**输入快捷键**」页面
 - `~/.dsh/settings.yaml` 中出现 `dsh-enter-customizer:` 段（改动后自动写入）
 
-### 卸载
+### 卸载与更新
 
 ```bash
-dsh plugin --profile web remove dsh-enter-customizer
+dsh plugin --profile web update dsh-enter-customizer   # 更新到最新
+dsh plugin --profile web remove dsh-enter-customizer   # 卸载
 ```
+
+### 常见问题
+
+- **安装报 "not in the npm registry"**：多半是路径含空格被参数拆分，改用 GitHub 方式安装或 junction 路径
+- **github.com 连接超时**（网络受限）：可改用 SSH 443 通道 —— `dsh plugin --profile web add git+ssh://git@ssh.github.com:443/Boliban/dsh-enter-customizer.git`；git push 同理 `git push ssh://git@ssh.github.com:443/Boliban/dsh-enter-customizer.git main`
+- **GitHub 方式安装后依赖解析异常**：GitHub 安装为真实安装（依赖由 pnpm 管理、peer 由 profile 提供）；若异常可回退到本地目录安装（方式二）排查
 
 ## 文件结构
 
