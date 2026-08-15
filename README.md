@@ -22,12 +22,6 @@ DSH（DeepSeek Harness）Web 插件：接管聊天输入框的系统输入快捷
 
 ![设置界面](assets/settings.png)
 
-### 发送失败提示
-
-失败提示浮动在输入栏正上方，3.2 秒后自动消失：
-
-![发送失败提示](assets/toast.svg)
-
 ## 默认配置
 
 | 快捷键 | 默认行为 |
