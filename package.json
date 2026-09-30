@@ -1,7 +1,7 @@
 {
   "name": "dsh-enter-customizer",
   "description": "DSH web plugin: customize the chat composer input shortcuts (Enter / Ctrl+Enter / Shift+Enter / Alt+Enter / send button) with send / queue-while-busy / newline / no-op behaviors, backed by durable user settings.",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "license": "MIT",
   "type": "module",
   "main": "lib/index.js",
@@ -22,12 +22,9 @@
     "client": {
       "platform": "web",
       "inject": [
-        "slots",
-        "sessions",
-        "timer",
-        "connection",
-        "remote",
-        "settingsScope"
+        "@deepseek-ai/dsh-client-ui-renderer",
+        "@deepseek-ai/dsh-api-session-controller",
+        "@deepseek-ai/dsh-client-ui-settings"
       ]
     },
     "bundle": {
@@ -36,15 +33,15 @@
   },
   "dependencies": {},
   "peerDependencies": {
-    "@deepseek-ai/dsh-settings": "^0.1.0-rc.6",
-    "@deepseek-ai/schemastery": "^3.18.1",
-    "@deepseek-ai/cordis": "^4.0.1",
+    "@deepseek-ai/dsh-settings": "^0.2.0-rc.1",
+    "@deepseek-ai/schemastery": "^3.18.4",
+    "@deepseek-ai/cordis": "^4.0.4",
     "react": "^18.2.0"
   },
   "devDependencies": {
-    "@deepseek-ai/dsh-settings": "^0.1.0-rc.6",
-    "@deepseek-ai/schemastery": "^3.18.1",
-    "@deepseek-ai/cordis": "^4.0.1",
+    "@deepseek-ai/dsh-settings": "^0.2.0-rc.1",
+    "@deepseek-ai/schemastery": "^3.18.4",
+    "@deepseek-ai/cordis": "^4.0.4",
     "react": "^18.2.0"
   }
 }
